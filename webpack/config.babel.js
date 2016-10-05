@@ -1,6 +1,7 @@
 import path from 'path';
 
 import webpack from 'webpack';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import autoprefixer from 'autoprefixer';
 
 const rootDir = path.join(__dirname, '..');
@@ -52,13 +53,21 @@ function getPlugins() {
         compress: {
           warnings: false
         }
-      })
+      }),
+      new ExtractTextPlugin('app.css', { allChunks: true })
     );
   }
   return plugins;
 }
 
 function getModule() {
+  const sassLoaders = [
+    'style',
+    'css?modules&importLoaders=2&localIdentName=[name]__[local]__[hash:base64:5]',
+    'postcss',
+    'sass'
+  ];
+
   return {
     loaders: [
       {
@@ -68,12 +77,9 @@ function getModule() {
       },
       {
         test: /\.scss$/,
-        loaders: [
-          'style',
-          'css?modules&importLoaders=2&localIdentName=[name]__[local]__[hash:base64:5]',
-          'postcss',
-          'sass'
-        ]
+        loader: isDevEnv ?
+          sassLoaders.join('!') :
+          ExtractTextPlugin.extract(sassLoaders[0], sassLoaders.slice(1).join('!'))
       }
     ],
     postcss: [autoprefixer]

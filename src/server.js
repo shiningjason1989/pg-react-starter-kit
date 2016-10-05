@@ -7,6 +7,6 @@ const rootDir = path.join(__dirname, '../public');
 const app = express();
 
 app.use(express.static(rootDir));
-app.use(historyApiFallback('index.html', { root: rootDir }));
+app.use(historyApiFallback('index.prod.html', { root: rootDir }));
 
 export default app;

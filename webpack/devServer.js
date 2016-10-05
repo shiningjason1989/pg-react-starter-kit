@@ -11,7 +11,9 @@ const rootDir = path.join(__dirname, '..');
 
 const server = new WebpackDevServer(webpack(config), {
   contentBase: path.join(rootDir, 'public'),
-  historyApiFallback: true,
+  historyApiFallback: {
+    index: 'index.dev.html'
+  },
   publicPath: config.output.publicPath,
   stats: {
     chunks: false,
