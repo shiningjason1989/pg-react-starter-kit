@@ -4,13 +4,21 @@
   "description": "A starting point for React apps.",
   "scripts": {
     "dev": "babel-node ./webpack/devServer.js",
-    "clean": "rm -rf ./public/assets",
-    "build": "npm run clean && webpack --config ./webpack/config.babel.js",
-    "build:prod": "NODE_ENV=production npm run build"
+    "clean-server": "rm -rf ./dist",
+    "clean-client": "rm -rf ./public/assets",
+    "build": "npm run build-server && npm run build-client",
+    "build:prod": "NODE_ENV=production npm run build",
+    "build-server": "npm run clean-server && babel src -d dist",
+    "build-client": "npm run clean-client && webpack --config ./webpack/config.babel.js",
+    "serve": "npm run build:prod && node ./bin/www"
   },
   "author": "Jason Chung <jason.chung@positivegrid.com>",
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "debug": "^2.2.0",
+    "express": "^4.14.0",
+    "express-history-api-fallback": "^2.0.0"
+  },
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-core": "^6.17.0",
