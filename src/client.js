@@ -1,17 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { AppContainer } from 'react-hot-loader';
 
 import configureStore from './utils/configureStore';
-import configureRoutes from './utils/configureRoutes';
 
+const rootEl = document.getElementById('app');
 const store = configureStore();
-const routes = configureRoutes();
 
-ReactDOM.render(
-  <Provider store={store}>
-    <Router routes={routes} history={store.history} />
-  </Provider>,
-  document.getElementById('app')
-);
+renderApp(rootEl);
+
+if (module.hot) {
+  module.hot.accept('./components/Root', () => renderApp(rootEl));
+}
+
+function renderApp(element) {
+  const Root = require('./components/Root').default;
+  ReactDOM.render(
+    <AppContainer>
+      <Root store={store} />
+    </AppContainer>,
+    element
+  );
+}

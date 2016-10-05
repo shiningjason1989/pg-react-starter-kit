@@ -15,6 +15,7 @@ const server = new WebpackDevServer(webpack(config), {
     index: 'index.dev.html'
   },
   publicPath: config.output.publicPath,
+  hot: true,
   stats: {
     chunks: false,
     colors: true

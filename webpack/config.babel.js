@@ -24,7 +24,15 @@ function getDevtool() {
 }
 
 function getEntry() {
-  return path.join(rootDir, 'src/client');
+  const entries = [path.join(rootDir, 'src/client')];
+  if (isDevEnv) {
+    entries.unshift(
+      'react-hot-loader/patch',
+      'webpack-dev-server/client?http://localhost:3000',
+      'webpack/hot/only-dev-server'
+    );
+  }
+  return entries;
 }
 
 function getOutput() {
@@ -47,7 +55,11 @@ function getPlugins() {
       'process.env.NODE_ENV': JSON.stringify(env)
     })
   ];
-  if (!isDevEnv) {
+  if (isDevEnv) {
+    plugins.push(
+      new webpack.HotModuleReplacementPlugin()
+    );
+  } else {
     plugins.push(
       new webpack.optimize.UglifyJsPlugin({
         compress: {
