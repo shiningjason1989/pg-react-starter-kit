@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "A starting point for React apps.",
   "scripts": {
-    "dev": "babel-node ./webpack/devServer.js"
+    "dev": "babel-node ./webpack/devServer.js",
+    "clean": "rm -rf ./public/assets",
+    "build": "npm run clean && webpack --config ./webpack/config.babel.js",
+    "build:prod": "NODE_ENV=production npm run build"
   },
   "author": "Jason Chung <jason.chung@positivegrid.com>",
   "license": "ISC",
