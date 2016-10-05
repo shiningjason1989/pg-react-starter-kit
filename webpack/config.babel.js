@@ -1,6 +1,7 @@
 import path from 'path';
 
 import webpack from 'webpack';
+import autoprefixer from 'autoprefixer';
 
 const rootDir = path.join(__dirname, '..');
 const env = process.env.NODE_ENV || 'development';
@@ -64,7 +65,17 @@ function getModule() {
         test: /\.js$/,
         loader: 'babel',
         exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        loaders: [
+          'style',
+          'css?modules&importLoaders=2&localIdentName=[name]__[local]__[hash:base64:5]',
+          'postcss',
+          'sass'
+        ]
       }
-    ]
+    ],
+    postcss: [autoprefixer]
   };
 }
