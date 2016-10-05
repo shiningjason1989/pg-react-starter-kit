@@ -10,14 +10,16 @@
     "build:prod": "NODE_ENV=production npm run build",
     "build-server": "npm run clean-server && babel src -d dist",
     "build-client": "npm run clean-client && webpack --config ./webpack/config.babel.js",
-    "serve": "npm run build:prod && node ./bin/www"
+    "serve": "npm run build:prod && node ./bin/www",
+    "heroku-postbuild": "npm run build:prod"
   },
   "author": "Jason Chung <jason.chung@positivegrid.com>",
   "license": "ISC",
   "dependencies": {
     "debug": "^2.2.0",
     "express": "^4.14.0",
-    "express-history-api-fallback": "^2.0.0"
+    "express-history-api-fallback": "^2.0.0",
+    "forever": "^0.15.2"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
